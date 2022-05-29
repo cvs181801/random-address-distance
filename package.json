@@ -1,0 +1,23 @@
+
+   
+{
+    "name": "random-address-distance",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "axios": "^0.25.0",
+        "express": "^4.17.3"
+    },
+    "engines": {
+        "node": "16.13.1",
+        "npm": "8.1.2"
+    },
+    "scripts": {
+        "dev": "nodemon server.js",
+        "heroku-prebuild": "npm install && npm i --prefix client && npm run build --prefix client",
+        "init-db-setup": "psql -f './db.sql'"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
+}
