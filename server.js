@@ -22,6 +22,8 @@ app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/index.html'))
   });
 
+
+
 const randomAddresses = [
     {1: "12343 NE Holladay Pl Portland, Oregon(OR), 97230"},
     {2: "15564 SE Morrison St Portland, Oregon(OR), 97233"},
@@ -45,11 +47,9 @@ const randomAddresses = [
     {20: "200 SW Market St #1770 Portland, Oregon(OR), 97201"},
     {21: "4926 SW 19th Ave Portland, Oregon(OR), 97201"},
     {22: "5038 SE 30th Ave #32 Portland, Oregon(OR), 97202"}
-
 ]
 
-app.get('/api/getAddresses', (req, res) => {
-    console.log(randomAddresses)
-    res.send(["randomAddresses", "hi"]);
-})
+app.get('/api/getAddresses', async(req, res) => {
+    console.log(res);
+})    
 
