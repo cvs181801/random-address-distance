@@ -11,16 +11,13 @@ app.use('/', express.static(path.join(__dirname, "client")));
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/index.html'))
-    
   })
 
 server.listen(process.env.PORT || 3000);
 
 //server.listen(3000);
 
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/index.html'))
-  });
+
 
 
 
@@ -50,6 +47,9 @@ const randomAddresses = [
 ]
 
 app.get('/api/getAddresses', async(req, res) => {
-    console.log(res);
+    res.send(["addresses :", randomAddresses])
 })    
 
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/index.html'))
+  });
