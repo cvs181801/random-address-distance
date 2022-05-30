@@ -17,10 +17,6 @@ server.listen(process.env.PORT || 3000);
 
 //server.listen(3000);
 
-
-
-
-
 const randomAddresses = [
     {1: "12343 NE Holladay Pl Portland, Oregon(OR), 97230"},
     {2: "15564 SE Morrison St Portland, Oregon(OR), 97233"},
@@ -49,6 +45,17 @@ const randomAddresses = [
 app.get('/api/getAddresses', async(req, res) => {
     res.send(["addresses :", randomAddresses])
 })    
+
+//create a way to plot these addresses on a map
+
+//from there, get lat and lon for each address
+
+//create algorith using the divide and conquer algorithm to find the x amount of farthest points (based on # of drivers available ) and then 
+//find the closest distance between those other points to each cluster center
+
+//create a way to render this visually on the map
+
+//then, find a way to generate random addresses on a map upon refresh or something
 
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/index.html'))
