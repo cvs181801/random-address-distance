@@ -1,3 +1,7 @@
+
+require("dotenv").config(); 
+
+
 const express = require('express')
 const app = express()
 const axios = require('axios')
@@ -5,6 +9,18 @@ const path = require('path')
 const http = require("http");
 const res = require('express/lib/response');
 const server = http.createServer(app);
+const NodeGeocoder = require('node-geocoder'); 
+const { Http2ServerRequest } = require('http2');
+
+const options = {
+  provider: 'google',
+  //httpAdapter: 'https',
+  //fetch: customFetchImplementation,
+  apiKey: process.env.GEOCODER_API_KEY, 
+  formatter: null
+};
+
+const geocoder = NodeGeocoder(options);
 
 app.use(express.json())
 app.use('/', express.static(path.join(__dirname, "client")));
@@ -46,14 +62,17 @@ app.get('/api/getAddresses', async(req, res) => {
     res.send(["addresses :", randomAddresses])
 })    
 
-//create a way to plot these addresses on a map
-
 //from there, get lat and lon for each address
 
-//create algorith using the divide and conquer algorithm to find the x amount of farthest points (based on # of drivers available ) and then 
+geocoder.geocode("5038 SE 30th Ave #32 Portland, Oregon(OR), 97202")
+  .then((res)=> {console.log(res[0])})
+
+  //create algorith using the divide and conquer algorithm to find the x amount of farthest points (based on # of drivers available ) and then 
 //find the closest distance between those other points to each cluster center
 
-//create a way to render this visually on the map
+
+//create a way to plot these addresses on a map in the browser , showing the regions per driver
+
 
 //then, find a way to generate random addresses on a map upon refresh or something
 

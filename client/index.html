@@ -9,8 +9,16 @@
 </head>
 <body>
     <p>Input number of available drivers:  </p>
-    
+    <input type="number">
+    <div id="map"></div>
     <script src="index.js" async defer></script>
+      <!-- 
+     The `defer` attribute causes the callback to execute after the full HTML
+     document has been parsed. For non-blocking uses, avoiding race conditions,
+     and consistent behavior across browsers, consider loading using Promises
+     with https://www.npmjs.com/package/@googlemaps/js-api-loader.
+    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJIlDWfV_FFqW8Ww_JiuQy8kBah5PEK6U&callback=initMap&v=weekly" defer></script> 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </body>
 </html>
