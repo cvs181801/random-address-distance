@@ -11,6 +11,19 @@ const res = require('express/lib/response');
 const server = http.createServer(app);
 const NodeGeocoder = require('node-geocoder'); 
 const { Http2ServerRequest } = require('http2');
+const haversine = require('haversine')
+
+// const start = {
+//   latitude: 30.849635,
+//   longitude: -83.24559
+// }
+
+// const end = {
+//   latitude: 27.950575,
+//   longitude: -82.457178
+// }
+
+// console.log('haversine :', haversine(start, end, {unit: 'mile'}))
 
 const options = {
   provider: 'google',
@@ -69,29 +82,41 @@ function massageAddressArray(array) {
   array.forEach((address)=> {
     geocoder.geocode(address.address)
       .then((res)=>{
+        
         newAddressArray.push({formattedAddress: res[0].formattedAddress, latitude: res[0].latitude, longitude: res[0].longitude})
-        //console.log(newAddressArray) 
-        const finalAddressArray = newAddressArray.map(addressObj=> {
-        return new MasterAddress(addressObj) 
-        })
-        console.log('finalAddressArray :', finalAddressArray)
-        return finalAddressArray
+          //console.log(newAddressArray) 
+          //console.log({formattedAddress: res[0].formattedAddress, latitude: res[0].latitude, longitude: res[0].longitude})
+          //const finalAddressArray = newAddressArray.map(addressObj=> {
+          //return new MasterAddress(addressObj) 
+        //})
+          console.log('newAddressArray :', newAddressArray) 
+          //console.log('finalAddressArray :', finalAddressArray[0])
+          return newAddressArray
       })  
   })
 }
 
 massageAddressArray(randomAddresses);
 
-class MasterAddress {
-  constructor(address) {
-    this.formattedAddress = address.formattedAddress,
-    this.latitude = address.latitude,
-    this.longitude = address.longitude
-  }
-}
+// class MasterAddress {
+//   constructor(address) {
+//     this.formattedAddress = address.formattedAddress,
+//     this.latitude = address.latitude,
+//     this.longitude = address.longitude
+//   }
+// }
 
   //create algorith using the divide and conquer algorithm to find the x amount of farthest points (based on # of drivers available ) and then 
 //find the closest distance between those other points to each cluster center
+
+//1. find the 2 points farthest apart
+//2. if more than 2 drivers available, find the other driver's points in between 2 farthest points.
+//3. for the remainder of the points, use formula to identify which marker point they're closest to
+
+//loop through each point, getting the distance from it and all other points. return the greatest distance.
+//once you found the point farthest away from each point, look through all those results and find the greatest distance.
+//no you have your two starting points.
+
 
 
 //create a way to plot these addresses on a map in the browser , showing the regions per driver
