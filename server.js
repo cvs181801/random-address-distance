@@ -13,17 +13,7 @@ const NodeGeocoder = require('node-geocoder');
 const { Http2ServerRequest } = require('http2');
 const haversine = require('haversine')
 
-// const start = {
-//   latitude: 30.849635,
-//   longitude: -83.24559
-// }
 
-// const end = {
-//   latitude: 27.950575,
-//   longitude: -82.457178
-// }
-
-// console.log('haversine :', haversine(start, end, {unit: 'mile'}))
 
 const options = {
   provider: 'google',
@@ -89,14 +79,18 @@ function massageAddressArray(array) {
           //const finalAddressArray = newAddressArray.map(addressObj=> {
           //return new MasterAddress(addressObj) 
         //})
-          console.log('newAddressArray :', newAddressArray) 
+          //console.log('newAddressArray :', newAddressArray) 
           //console.log('finalAddressArray :', finalAddressArray[0])
           return newAddressArray
       })  
   })
 }
 
-massageAddressArray(randomAddresses);
+//const masterAddressList = massageAddressArray(randomAddresses)
+
+// masterAddressList.map(addressObj=> {
+//   return new MasterAddress(addressObj) 
+// })
 
 // class MasterAddress {
 //   constructor(address) {
@@ -106,10 +100,58 @@ massageAddressArray(randomAddresses);
 //   }
 // }
 
-  //create algorith using the divide and conquer algorithm to find the x amount of farthest points (based on # of drivers available ) and then 
+  //create algorithm using the divide and conquer algorithm to find the x amount of farthest points (based on # of drivers available ) and then 
 //find the closest distance between those other points to each cluster center
 
 //1. find the 2 points farthest apart
+
+// const start = {
+//   latitude: 30.849635,
+//   longitude: -83.24559
+// }
+
+// const end = {
+//   latitude: 27.950575,
+//   longitude: -82.457178
+// }
+
+// console.log('haversine :', haversine(start, end, {unit: 'mile'}))
+
+function findFarthestPoint(array) {
+
+ for (let i=0; i < array.length; i++) {
+    let start = {
+      latitude: array[i].latitude,
+      longitude: array[i].longitude
+    }
+
+    console.log(start)
+    
+    
+  }
+
+}
+
+findFarthestPoint(
+  massageAddressArray(randomAddresses)
+//   [{
+//   formattedAddress: '200 SW Market St # 1770, Portland, OR 97201, USA',
+//   latitude: 45.51159759999999,
+//   longitude: -122.6786514
+// },
+// {
+//   formattedAddress: '12030 SW 97th Pl, Tigard, OR 97223, USA',
+//   latitude: 45.433523,
+//   longitude: -122.7757947
+// },
+// {
+//   formattedAddress: '12614 E Burnside St, Portland, OR 97233, USA',
+//   latitude: 45.5222491,
+//   longitude: -122.5331974
+// }
+// ]
+)
+
 //2. if more than 2 drivers available, find the other driver's points in between 2 farthest points.
 //3. for the remainder of the points, use formula to identify which marker point they're closest to
 
