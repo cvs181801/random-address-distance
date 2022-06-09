@@ -68,6 +68,7 @@ app.get('/api/getAddresses', async(req, res) => {
 //from there, get lat and lon for each address
 
 let newAddressArray = [];
+
 function massageAddressArray(array) {
   array.forEach((address)=> {
     geocoder.geocode(address.address)
@@ -82,14 +83,18 @@ function massageAddressArray(array) {
           //console.log('newAddressArray :', newAddressArray) 
           //console.log('finalAddressArray :', finalAddressArray[0])
           //console.log(newAddressArray)
+          
           return newAddressArray;
-
       })  
-      
   })
- 
+
 }
-massageAddressArray(randomAddresses)
+
+app.get('/api/test',  function (req, res) {
+  //res.send(massageAddressArray(randomAddresses))
+  res.send(['hi'])
+})
+
 
 
 
