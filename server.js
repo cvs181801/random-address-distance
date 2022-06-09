@@ -65,21 +65,36 @@ app.get('/api/getAddresses', async(req, res) => {
 
 //from there, get lat and lon for each address
 
+// function getAllByContent() {
+//   app.get('/api/searchdata', async (req, res) => {
+//       const {search} = req.query;
+//       const response1 = await axios.get(`https://api.twitter.com/2/tweets/search/recent?query=${search}&tweet.fields=created_at,public_metrics&expansions=attachments.media_keys,author_id&media.fields=media_key,type,preview_image_url,url,alt_text`, {headers}) 
+//       const response2 = await axios.get(`https://api.twitter.com/2/users?ids=${response1.data.data[0].author_id},${response1.data.data[1].author_id},${response1.data.data[2].author_id},${response1.data.data[3].author_id},${response1.data.data[4].author_id},${response1.data.data[5].author_id},${response1.data.data[6].author_id},${response1.data.data[7].author_id},${response1.data.data[8].author_id},${response1.data.data[9].author_id}&expansions=pinned_tweet_id&user.fields=profile_image_url,verified`, {headers}) 
+//       res.send(massageTwitterData(response1.data.data, response1.data.includes.media, response2.data.data))
+//       return response1, response2
+//   })
+// }
+
+
 let newAddressArray = [];
 function massageAddressArray(array) {
-  array.forEach(async (address)=> {
-    let result = await geocoder.geocode(address.address);
-    newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
-    //console.log(newAddressArray)
-    const testarr= [1,2,3]
-    return newAddressArray;
+  app.get('/api/test',  ( req, res ) => {
+    array.forEach( async(address)=> {
+      let result = await geocoder.geocode(address.address);
+      newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
+      console.log(newAddressArray)
+      return newAddressArray;
+      
+    })
+    res.send(newAddressArray)
   })
+  
 }
 
 massageAddressArray(randomAddresses);
 
 //function getGeocoderData(array) {
-    app.get('/api/test', async ( req, res ) => {
+    //app.get('/api/test', async ( req, res ) => {
       //for (let i=0; i < array.length; i++) {
         //let result = await geocoder.geocode(address.address);
         //newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
@@ -100,29 +115,25 @@ massageAddressArray(randomAddresses);
           
     //       return newAddressArray;
     //   })  
-      res.send(testarr)
       //return newAddressArray;
-   }) 
+   //}) 
 
 //}
 
 //getGeocoderData(randomAddresses)
 
 
-
-
-
 // const newestAddressArray = masterAddressList.map(addressObj=> {
 //   return new MasterAddress(addressObj) 
 // })
 
-// class MasterAddress {
-//   constructor(address) {
-//     this.formattedAddress = address.formattedAddress,
-//     this.latitude = address.latitude,
-//     this.longitude = address.longitude
-//   }
-// }
+class MasterAddress {
+  constructor(address) {
+    this.formattedAddress = address.formattedAddress,
+    this.latitude = address.latitude,
+    this.longitude = address.longitude
+  }
+}
 
   //create algorithm using the divide and conquer algorithm to find the x amount of farthest points (based on # of drivers available ) and then 
 //find the closest distance between those other points to each cluster center
