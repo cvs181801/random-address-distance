@@ -81,14 +81,19 @@ function massageAddressArray(array) {
         //})
           //console.log('newAddressArray :', newAddressArray) 
           //console.log('finalAddressArray :', finalAddressArray[0])
-          return newAddressArray
+          //console.log(newAddressArray)
+          return newAddressArray;
+
       })  
+      
   })
+ 
 }
+massageAddressArray(randomAddresses)
 
-//const masterAddressList = massageAddressArray(randomAddresses)
 
-// masterAddressList.map(addressObj=> {
+
+// const newestAddressArray = masterAddressList.map(addressObj=> {
 //   return new MasterAddress(addressObj) 
 // })
 
@@ -116,24 +121,24 @@ function massageAddressArray(array) {
 // }
 
 // console.log('haversine :', haversine(start, end, {unit: 'mile'}))
-
 function findFarthestPoint(array) {
 
- for (let i=0; i < array.length; i++) {
-    let start = {
-      latitude: array[i].latitude,
-      longitude: array[i].longitude
-    }
+  // for (let i=0; i < array.length; i++) {
+  //    let start = {
+  //      latitude: array[i].latitude,
+  //      longitude: array[i].longitude
+  //    }
+ 
+     console.log(array)
+     
+   //}
+ 
+ }
+ 
+//findFarthestPoint(massageAddressArray)
+//ultimately I think we will need to map over the initial function result in order to get the array into a usable container . ?
 
-    console.log(start)
-    
-    
-  }
 
-}
-
-findFarthestPoint(
-  massageAddressArray(randomAddresses)
 //   [{
 //   formattedAddress: '200 SW Market St # 1770, Portland, OR 97201, USA',
 //   latitude: 45.51159759999999,
@@ -150,7 +155,7 @@ findFarthestPoint(
 //   longitude: -122.5331974
 // }
 // ]
-)
+//)
 
 //2. if more than 2 drivers available, find the other driver's points in between 2 farthest points.
 //3. for the remainder of the points, use formula to identify which marker point they're closest to
