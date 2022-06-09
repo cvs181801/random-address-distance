@@ -1,7 +1,6 @@
 
 require("dotenv").config(); 
 
-
 const express = require('express')
 const app = express()
 const axios = require('axios')
@@ -12,7 +11,6 @@ const server = http.createServer(app);
 const NodeGeocoder = require('node-geocoder'); 
 const { Http2ServerRequest } = require('http2');
 const haversine = require('haversine')
-
 
 
 const options = {
@@ -68,32 +66,48 @@ app.get('/api/getAddresses', async(req, res) => {
 //from there, get lat and lon for each address
 
 let newAddressArray = [];
-
 function massageAddressArray(array) {
-  array.forEach((address)=> {
-    geocoder.geocode(address.address)
-      .then((res)=>{
-        
-        newAddressArray.push({formattedAddress: res[0].formattedAddress, latitude: res[0].latitude, longitude: res[0].longitude})
-          //console.log(newAddressArray) 
-          //console.log({formattedAddress: res[0].formattedAddress, latitude: res[0].latitude, longitude: res[0].longitude})
-          //const finalAddressArray = newAddressArray.map(addressObj=> {
-          //return new MasterAddress(addressObj) 
-        //})
-          //console.log('newAddressArray :', newAddressArray) 
-          //console.log('finalAddressArray :', finalAddressArray[0])
-          //console.log(newAddressArray)
-          
-          return newAddressArray;
-      })  
+  array.forEach(async (address)=> {
+    let result = await geocoder.geocode(address.address);
+    newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
+    //console.log(newAddressArray)
+    const testarr= [1,2,3]
+    return newAddressArray;
   })
-
 }
 
-app.get('/api/test',  function (req, res) {
-  //res.send(massageAddressArray(randomAddresses))
-  res.send(['hi'])
-})
+massageAddressArray(randomAddresses);
+
+//function getGeocoderData(array) {
+    app.get('/api/test', async ( req, res ) => {
+      //for (let i=0; i < array.length; i++) {
+        //let result = await geocoder.geocode(address.address);
+        //newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
+      //}
+      
+    // geocoder.geocode(address.address)
+    //   .then((res)=>{
+        
+      
+    //       //console.log(newAddressArray) 
+    //       //console.log({formattedAddress: res[0].formattedAddress, latitude: res[0].latitude, longitude: res[0].longitude})
+    //       //const finalAddressArray = newAddressArray.map(addressObj=> {
+    //       //return new MasterAddress(addressObj) 
+    //     //})
+    //       //console.log('newAddressArray :', newAddressArray) 
+    //       //console.log('finalAddressArray :', finalAddressArray[0])
+    //       //console.log(newAddressArray)
+          
+    //       return newAddressArray;
+    //   })  
+      res.send(testarr)
+      //return newAddressArray;
+   }) 
+
+//}
+
+//getGeocoderData(randomAddresses)
+
 
 
 
