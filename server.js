@@ -120,6 +120,8 @@ class MasterAddress {
 // }
 
 // console.log('haversine :', haversine(start, end, {unit: 'mile'}))
+let startArray = [];
+let end = {latitude: 45.51663, longitude: -122.5036064}
 function findFarthestPoint(array) {
 
   for (let i=0; i < array.length; i++) {
@@ -127,10 +129,12 @@ function findFarthestPoint(array) {
        latitude: array[i].latitude,
        longitude: array[i].longitude
      }
- 
-     console.log('start is here! ', start)
-     
-   }
+
+    startArray.push(start)
+  }
+    for (let j=0; j < startArray.length; j++) {
+      console.log(haversine(startArray[j], end, {unit: 'mile'}))
+    }
  
  }
  
