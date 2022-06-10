@@ -78,50 +78,19 @@ app.get('/api/getAddresses', async(req, res) => {
 
 let newAddressArray = [];
 function massageAddressArray(array) {
-  app.get('/api/test',  ( req, res ) => {
-    array.forEach( async(address)=> {
-      let result = await geocoder.geocode(address.address);
-      newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
-      console.log(newAddressArray)
-      return newAddressArray;
-      
-    })
-    res.send(newAddressArray)
+  app.get('/api/test', async ( req, res ) => {
+      for (let i=0; i < array.length; i++) {
+        let result = await geocoder.geocode(array[i]);
+        newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
+      }
+      //console.log(newAddressArray)
+      findFarthestPoint(newAddressArray)
+      res.send(newAddressArray)
   })
-  
 }
 
 massageAddressArray(randomAddresses);
-
-//function getGeocoderData(array) {
-    //app.get('/api/test', async ( req, res ) => {
-      //for (let i=0; i < array.length; i++) {
-        //let result = await geocoder.geocode(address.address);
-        //newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
-      //}
-      
-    // geocoder.geocode(address.address)
-    //   .then((res)=>{
-        
-      
-    //       //console.log(newAddressArray) 
-    //       //console.log({formattedAddress: res[0].formattedAddress, latitude: res[0].latitude, longitude: res[0].longitude})
-    //       //const finalAddressArray = newAddressArray.map(addressObj=> {
-    //       //return new MasterAddress(addressObj) 
-    //     //})
-    //       //console.log('newAddressArray :', newAddressArray) 
-    //       //console.log('finalAddressArray :', finalAddressArray[0])
-    //       //console.log(newAddressArray)
-          
-    //       return newAddressArray;
-    //   })  
-      //return newAddressArray;
-   //}) 
-
-//}
-
-//getGeocoderData(randomAddresses)
-
+//I struggled with getting the res.send() from express.js to send from within a array.forEach method.  I ended up having to use a for loop to loop through each address and get the geolocation data.
 
 // const newestAddressArray = masterAddressList.map(addressObj=> {
 //   return new MasterAddress(addressObj) 
@@ -153,15 +122,15 @@ class MasterAddress {
 // console.log('haversine :', haversine(start, end, {unit: 'mile'}))
 function findFarthestPoint(array) {
 
-  // for (let i=0; i < array.length; i++) {
-  //    let start = {
-  //      latitude: array[i].latitude,
-  //      longitude: array[i].longitude
-  //    }
+  for (let i=0; i < array.length; i++) {
+     let start = {
+       latitude: array[i].latitude,
+       longitude: array[i].longitude
+     }
  
-     console.log(array)
+     console.log('start is here! ', start)
      
-   //}
+   }
  
  }
  
