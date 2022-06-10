@@ -132,8 +132,13 @@ function findFarthestPoint(array) {
 
     startArray.push(start)
   }
+
     for (let j=0; j < startArray.length; j++) {
-      console.log(haversine(startArray[j], end, {unit: 'mile'}))
+      const subArray = startArray[j];
+        for (let k=0; k <= subArray.length; k++) {
+          console.log(startArray[k])
+        }
+      //console.log(haversine(startArray[j], end, {unit: 'mile'}))
     }
  
  }
