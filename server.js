@@ -119,8 +119,9 @@ class MasterAddress {
 
 // console.log('haversine :', haversine(start, end, {unit: 'mile'}))
 let startArray = [];
-let haversineDistance;
+let haversineDistance= [];
 let finalHaversineArr = [];
+let sum = 0;
 let end = {latitude: 45.51663, longitude: -122.5036064}
 function findFarthestPoint(array) {
 
@@ -135,19 +136,22 @@ function findFarthestPoint(array) {
   }
 //console.log(startArray)
     for (let j=0; j < startArray.length; j++) {
-      const subArray = startArray.slice(1, (startArray.length+1));
-      console.log('new point :')
+      const subArray = startArray.slice(1, (startArray.length + 1));
+      console.log('new point :', sum / startArray.length)
+      sum = 0;
         for (let k=0; k < subArray.length; k++) {
-          
-          console.log(haversine(startArray[j], subArray[k], {unit: 'mile'}))
+          //console.log(haversine(startArray[j], subArray[k], {unit: 'mile'}))
           
           haversineDistance = haversine(startArray[j], subArray[k], {unit: 'mile'})
-          finalHaversineArr.push(haversineDistance)
+          console.log(haversineDistance)
+          sum += haversineDistance
+          
+          //finalHaversineArr.push(haversineDistance)
           //of all these points, which 2 have the largest amount of the lowest distances? aka which two have the lowest mean?
         }
       //we need to get the mean of each of the sections
     }
-    console.log(finalHaversineArr)
+    //console.log('sum', sum)
  }
  
 
