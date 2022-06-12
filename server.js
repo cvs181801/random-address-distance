@@ -145,9 +145,9 @@ function findFarthestPoint(array) {
       sumOfSection = sum / startArray.length;
       finalHaversineArr.push(sumOfSection);
       sum = 0;
+      sumOfSection = 0;
         for (let k=0; k < subArray.length ; k++) {
-          //console.log(startArray[j], subArray[k], )
-          
+          //console.log(startArray[j], subArray[k])
           haversineDistance = haversine(startArray[j], subArray[k], {unit: 'mile'})
           console.log(haversineDistance)
           sum += haversineDistance
@@ -156,11 +156,26 @@ function findFarthestPoint(array) {
           //of all these points, which 2 have the largest amount of the lowest distances? aka which two have the lowest mean?
         }
       //we need to get the mean of each of the sections
+      
       console.log('new point :', sum / startArray.length)
-      sum = 0;
-      console.log(finalHaversineArr)
+      
     }
-    //console.log('sum', sum)
+    
+    sumOfSection = sum / startArray.length;
+    console.log('sumofsection', sumOfSection)
+    finalHaversineArr.push(sumOfSection);
+    const newFinalHaversineArr = finalHaversineArr.splice(1,(startArray.length + 1))
+      //sum = 0;
+    console.log('newFinalHaversineArr :', newFinalHaversineArr)
+    const primaryPoint = Math.min(...newFinalHaversineArr) 
+    console.log('primary :', primaryPoint)
+    const indexOfPrimary = newFinalHaversineArr.indexOf(primaryPoint);
+    console.log(indexOfPrimary)
+    const brandNewFinalHaversineArr = newFinalHaversineArr.splice(indexOfPrimary, 1 , indexOfPrimary +1)
+    console.log('brandNewFinalHaversineArr :', brandNewFinalHaversineArr)
+    const secondaryPoint = Math.min(brandNewFinalHaversineArr)
+    console.log('secondary :', secondaryPoint) //this math is wrong 
+
  }
  
 
