@@ -32,8 +32,6 @@ app.get('/', (req, res) => {
 
 server.listen(process.env.PORT || 3000);
 
-//server.listen(3000);
-
 const randomAddresses = [
     {address: "12343 NE Holladay Pl Portland, Oregon(OR), 97230"},
     {address: "15564 SE Morrison St Portland, Oregon(OR), 97233"},
@@ -65,17 +63,6 @@ app.get('/api/getAddresses', async(req, res) => {
 
 //from there, get lat and lon for each address
 
-// function getAllByContent() {
-//   app.get('/api/searchdata', async (req, res) => {
-//       const {search} = req.query;
-//       const response1 = await axios.get(`https://api.twitter.com/2/tweets/search/recent?query=${search}&tweet.fields=created_at,public_metrics&expansions=attachments.media_keys,author_id&media.fields=media_key,type,preview_image_url,url,alt_text`, {headers}) 
-//       const response2 = await axios.get(`https://api.twitter.com/2/users?ids=${response1.data.data[0].author_id},${response1.data.data[1].author_id},${response1.data.data[2].author_id},${response1.data.data[3].author_id},${response1.data.data[4].author_id},${response1.data.data[5].author_id},${response1.data.data[6].author_id},${response1.data.data[7].author_id},${response1.data.data[8].author_id},${response1.data.data[9].author_id}&expansions=pinned_tweet_id&user.fields=profile_image_url,verified`, {headers}) 
-//       res.send(massageTwitterData(response1.data.data, response1.data.includes.media, response2.data.data))
-//       return response1, response2
-//   })
-// }
-
-
 let newAddressArray = [];
 function massageAddressArray(array) {
   app.get('/api/test', async ( req, res ) => {
@@ -96,28 +83,15 @@ massageAddressArray(randomAddresses);
 //   return new MasterAddress(addressObj) 
 // })
 
-class MasterAddress {
-  constructor(address) {
-    this.formattedAddress = address.formattedAddress,
-    this.latitude = address.latitude,
-    this.longitude = address.longitude
-  }
-}
-
+// class MasterAddress {
+//   constructor(address) {
+//     this.formattedAddress = address.formattedAddress,
+//     this.latitude = address.latitude,
+//     this.longitude = address.longitude
+//   }
+// }
 
 //1. find the 2 points that have the closest points clustered around them
-
-// const start = {
-//   latitude: 30.849635,
-//   longitude: -83.24559
-// }
-
-// const end = {
-//   latitude: 27.950575,
-//   longitude: -82.457178
-// }
-
-// console.log('haversine :', haversine(start, end, {unit: 'mile'}))
 
 let startArray = [];
 let subArray = [];
@@ -147,15 +121,13 @@ function findFarthestPoint(array) {
       sum = 0;
       sumOfSection = 0;
         for (let k=0; k < subArray.length ; k++) {
-          //console.log(startArray[j], subArray[k])
+
           haversineDistance = haversine(startArray[j], subArray[k], {unit: 'mile'})
           console.log(haversineDistance)
           sum += haversineDistance
           
           //finalHaversineArr.push(haversineDistance)
-          //of all these points, which 2 have the largest amount of the lowest distances? aka which two have the lowest mean?
         }
-      //we need to get the mean of each of the sections
       
       console.log('new point :', sum / startArray.length)
       
@@ -165,27 +137,17 @@ function findFarthestPoint(array) {
     console.log('sumofsection', sumOfSection)
     finalHaversineArr.push(sumOfSection);
     const newFinalHaversineArr = finalHaversineArr.splice(1,(startArray.length + 1))
-      //sum = 0;
     console.log('newFinalHaversineArr :', newFinalHaversineArr)
-    const primaryPoint = Math.min(...newFinalHaversineArr) 
-    console.log('primary :', primaryPoint)
-    const indexOfPrimary = newFinalHaversineArr.indexOf(primaryPoint);
-    console.log(indexOfPrimary)
-    const brandNewFinalHaversineArr = newFinalHaversineArr.splice(indexOfPrimary, 1 , indexOfPrimary +1)
-    console.log('brandNewFinalHaversineArr :', brandNewFinalHaversineArr)
-    const secondaryPoint = Math.min(brandNewFinalHaversineArr)
-    console.log('secondary :', secondaryPoint) //this math is wrong 
+    
+    const sortedArr = newFinalHaversineArr.sort(function(a, b){return a - b}) ///this returns the array sorted numerically in ascending order 
+    const primaryMean = newFinalHaversineArr[0]
+    const secondaryMean = newFinalHaversineArr[1]
+    console.log('primary :', primaryMean)
+    console.log('secondary :', secondaryMean) //we can use a loop to iterate based on # of drivers available
 
  }
  
-
-//2. if more than 2 drivers available, find the other driver's points in between 2 farthest points.
-//3. for the remainder of the points, use formula to identify which marker point they're closest to
-
-//loop through each point, getting the distance from it and all other points. return the greatest distance.
-//once you found the point farthest away from each point, look through all those results and find the greatest distance.
-//no you have your two starting points.
-
+//3. based on the number of means, group the remainder of the points around those. (need a way to link these means back to the original lat & lon )
 
 
 //create a way to plot these addresses on a map in the browser , showing the regions per driver
