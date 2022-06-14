@@ -57,9 +57,9 @@ const randomAddresses = [
     {address: "5038 SE 30th Ave #32 Portland, Oregon(OR), 97202"}
 ]
 
-app.get('/api/getAddresses', async(req, res) => {
-    res.send(["addresses :", randomAddresses])
-})    
+// app.get('/api/getAddresses', async(req, res) => {
+//     res.send(["addresses :", randomAddresses])
+// })    
 
 //from there, get lat and lon for each address
 
@@ -109,9 +109,9 @@ function findFarthestPoint(array) {
      }
 
     startArray.push(start)
-    
+    console.log('startArray :', startArray)
   }
-//console.log('startArray', startArray)
+
     for (let j=0; j < startArray.length; j++) {
       //const subArray = startArray.slice(1, (startArray.length + 1));
       subArray = startArray.slice(0,(startArray.length + 1))
@@ -123,21 +123,21 @@ function findFarthestPoint(array) {
         for (let k=0; k < subArray.length ; k++) {
 
           haversineDistance = haversine(startArray[j], subArray[k], {unit: 'mile'})
-          console.log(haversineDistance)
+          //console.log(haversineDistance)
           sum += haversineDistance
           
           //finalHaversineArr.push(haversineDistance)
         }
       
-      console.log('new point :', sum / startArray.length)
+      //console.log('new point :', sum / startArray.length)
       
     }
     
     sumOfSection = sum / startArray.length;
-    console.log('sumofsection', sumOfSection)
+    //console.log('sumofsection', sumOfSection)
     finalHaversineArr.push(sumOfSection);
     const newFinalHaversineArr = finalHaversineArr.splice(1,(startArray.length + 1))
-    console.log('newFinalHaversineArr :', newFinalHaversineArr)
+    //console.log('newFinalHaversineArr :', newFinalHaversineArr)
     
     const sortedArr = newFinalHaversineArr.sort(function(a, b){return a - b}) ///this returns the array sorted numerically in ascending order 
     const primaryMean = newFinalHaversineArr[0]
@@ -145,7 +145,7 @@ function findFarthestPoint(array) {
     console.log('primary :', primaryMean)
     console.log('secondary :', secondaryMean) //we can use a loop to iterate based on # of drivers available
 
- }
+ } //need to addd an index to the original arrray which gets passed in, then referneced when doing the math. this way, the final array can reference which points the math was for 
  
 //3. based on the number of means, group the remainder of the points around those. (need a way to link these means back to the original lat & lon )
 
