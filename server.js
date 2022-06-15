@@ -33,28 +33,29 @@ app.get('/', (req, res) => {
 server.listen(process.env.PORT || 3000);
 
 const randomAddresses = [
-    {address: "12343 NE Holladay Pl Portland, Oregon(OR), 97230"},
-    {address: "15564 SE Morrison St Portland, Oregon(OR), 97233"},
-    {address: "3125 SW 82nd Ave Portland, Oregon(OR), 97225"},
-    {address: "222 SW Columbia St Portland, Oregon(OR), 97201"},
-    {address: "2020 SW Broadway Dr #APT 7 Portland, Oregon(OR), 97201"},
-    {address: "1849 SE Ankeny St Portland, Oregon(OR), 97214"},
-    {address: "3417 N Michigan Ave Portland, Oregon(OR), 97227"},
-    {address: "1969 NW Johnson St #APT 302 Portland, Oregon(OR), 97209"},
-    {address: "7128 SW Burlingame Ave Portland, Oregon(OR), 97219"},
-    {address: "10339 NE Prescott St #306 Portland, Oregon(OR), 97220"},
-    {address: "10677 NW Lost Park Dr Portland, Oregon(OR), 97229"},
-    {address: "10145 SW Highland Dr Portland, Oregon(OR), 97224"},
-    {address: "15768 SE Powell Blvd #9 Portland, Oregon(OR), 97236"},
-    {address: "16035 SW King Charles Ave Portland, Oregon(OR), 97224"},
-    {address: "15920 NE Fremont St Portland, Oregon(OR), 97230"},
-    {address: "2536 SE Harrison St #9 Portland, Oregon(OR), 97222"},
-    {address: "236 SE 74th Ave Portland, Oregon(OR), 97215"},
-    {address: "12030 SW 97th Pl Portland, Oregon(OR), 97223"},
-    {address: "12614 E Burnside St Portland, Oregon(OR), 97233"},
-    {address: "200 SW Market St #1770 Portland, Oregon(OR), 97201"},
-    {address: "4926 SW 19th Ave Portland, Oregon(OR), 97201"},
-    {address: "5038 SE 30th Ave #32 Portland, Oregon(OR), 97202"}
+    {index: 1, address: "12343 NE Holladay Pl Portland, Oregon(OR), 97230"},
+    {index: 2, address: "15564 SE Morrison St Portland, Oregon(OR), 97233"},
+    {index: 3, address: "3125 SW 82nd Ave Portland, Oregon(OR), 97225"},
+    {index: 4, address: "3125 SW 82nd Ave Portland, Oregon(OR), 97225"},
+    {index: 5, address: "222 SW Columbia St Portland, Oregon(OR), 97201"},
+    {index: 6, address: "2020 SW Broadway Dr #APT 7 Portland, Oregon(OR), 97201"},
+    {index: 7, address: "1849 SE Ankeny St Portland, Oregon(OR), 97214"},
+    {index: 8, address: "3417 N Michigan Ave Portland, Oregon(OR), 97227"},
+    {index: 9, address: "1969 NW Johnson St #APT 302 Portland, Oregon(OR), 97209"},
+    {index: 10, address: "7128 SW Burlingame Ave Portland, Oregon(OR), 97219"},
+    {index: 11, address: "10339 NE Prescott St #306 Portland, Oregon(OR), 97220"},
+    {index: 12, address: "10677 NW Lost Park Dr Portland, Oregon(OR), 97229"},
+    {index: 13, address: "10145 SW Highland Dr Portland, Oregon(OR), 97224"},
+    {index: 14, address: "15768 SE Powell Blvd #9 Portland, Oregon(OR), 97236"},
+    {index: 15, address: "16035 SW King Charles Ave Portland, Oregon(OR), 97224"},
+    {index: 16, address: "15920 NE Fremont St Portland, Oregon(OR), 97230"},
+    {index: 17, address: "2536 SE Harrison St #9 Portland, Oregon(OR), 97222"},
+    {index: 18, address: "236 SE 74th Ave Portland, Oregon(OR), 97215"},
+    {index: 19, address: "12030 SW 97th Pl Portland, Oregon(OR), 97223"},
+    {index: 20, address: "12614 E Burnside St Portland, Oregon(OR), 97233"},
+    {index: 21, address: "200 SW Market St #1770 Portland, Oregon(OR), 97201"},
+    {index: 22, address: "4926 SW 19th Ave Portland, Oregon(OR), 97201"},
+    {index: 23, address: "5038 SE 30th Ave #32 Portland, Oregon(OR), 97202"}
 ]
 
 // app.get('/api/getAddresses', async(req, res) => {
@@ -68,6 +69,7 @@ function massageAddressArray(array) {
   app.get('/api/test', async ( req, res ) => {
       for (let i=0; i < array.length; i++) {
         let result = await geocoder.geocode(array[i]);
+        console.log("result 1!! ", result[0]) //ok the index dosent come through here so we'll need to push it in separately
         newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
       }
       //console.log(newAddressArray)
