@@ -106,9 +106,9 @@ let startArray = [];
 let subArray = [];
 let haversineDistance= [];
 let finalHaversineArr = [];
-let sum = 0;
+let distance = 0;
 let sumOfSection = 0;
-let latLonObj;
+let indexAndAddress = {};
 
 function findFarthestPoint(array) {
 
@@ -121,43 +121,43 @@ function findFarthestPoint(array) {
      let startMeasureArr = [array[i].index, array[i].formattedAddress, startObj]
 
     startArray.push(startMeasureArr)
-    console.log('startArray :', startArray)
+   // console.log('startArray :', startArray)
   }
   //const subArray = startArray.slice(1, (startArray.length + 1));
   subArray = startArray.slice(0,(startArray.length + 1))
 
     for (let j=0; j < startArray.length; j++) {
-      //console.log('subArray', subArray)
-      sumOfSection = sum / startArray.length; //why the hell did I do this
-      finalHaversineArr.push(sumOfSection);
-      sum = 0;
+      //console.log('indexAndAddress', indexAndAddress)
+      sumOfSection = distance / startArray.length; //why the hell did I do this? *** to get the mean
+      distanceObj = {info: indexAndAddress, distance: sumOfSection}
+      finalHaversineArr.push(distanceObj);
+      distance = 0;
+      indexAndAddress = {};
       sumOfSection = 0;
         for (let k=0; k < subArray.length ; k++) {
 
           haversineDistance = haversine(startArray[j][2], subArray[k][2], {unit: 'mile'})
           //console.log(haversineDistance)
-          sum += haversineDistance
-          
+          distance += haversineDistance
+          indexAndAddress = {index1: startArray[j][0], address1: startArray[j][1], index2: subArray[k][0], address2: subArray[k][1]}
      
         }
       
-      //console.log('new point :', sum / startArray.length)
-      
     }
     
-    sumOfSection = sum / startArray.length;
+    sumOfSection = distance / startArray.length;
     //console.log('sumofsection', sumOfSection)
     finalHaversineArr.push(sumOfSection);
     const newFinalHaversineArr = finalHaversineArr.splice(1,(startArray.length + 1))
-    //console.log('newFinalHaversineArr :', newFinalHaversineArr)
+    console.log('newFinalHaversineArr :', newFinalHaversineArr)
     
-    const sortedArr = newFinalHaversineArr.sort(function(a, b){return a - b}) ///this returns the array sorted numerically in ascending order 
+    const sortedArr = newFinalHaversineArr.sort(function(a, b){return a - b}) ///this returns the array sorted numerically in ascending order *** will likely need to redo somehow
     const primaryMean = newFinalHaversineArr[0]
     const secondaryMean = newFinalHaversineArr[1]
     //console.log('primary :', primaryMean)
     //console.log('secondary :', secondaryMean) //we can use a loop to iterate based on # of drivers available
 
- } //need to addd an index to the original arrray which gets passed in, then referneced when doing the math. this way, the final array can reference which points the math was for 
+ } 
  
 //3. based on the number of means, group the remainder of the points around those. (need a way to link these means back to the original lat & lon )
 
