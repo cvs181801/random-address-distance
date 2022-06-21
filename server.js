@@ -65,12 +65,19 @@ const randomAddresses = [
 //from there, get lat and lon for each address
 
 let newAddressArray = [];
+let indexObj;
+let addressObj;
+let fullObj;
 function massageAddressArray(array) {
   app.get('/api/test', async ( req, res ) => {
       for (let i=0; i < array.length; i++) {
         let result = await geocoder.geocode(array[i]);
-        console.log("result 1!! ", result[0]) //ok the index dosent come through here so we'll need to push it in separately
-        newAddressArray.push({formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude})
+    
+        indexObj = {index: array[i].index}
+        addressObj = {formattedAddress: result[0].formattedAddress, latitude: result[0].latitude, longitude: result[0].longitude}
+        fullObj = Object.assign(indexObj, addressObj)
+        newAddressArray.push(fullObj)
+
       }
       //console.log(newAddressArray)
       findFarthestPoint(newAddressArray)
@@ -101,34 +108,37 @@ let haversineDistance= [];
 let finalHaversineArr = [];
 let sum = 0;
 let sumOfSection = 0;
+let latLonObj;
 
 function findFarthestPoint(array) {
 
   for (let i=0; i < array.length; i++) {
-     let start = {
+     let startObj = {
        latitude: array[i].latitude,
        longitude: array[i].longitude
      }
 
-    startArray.push(start)
+     let startMeasureArr = [array[i].index, array[i].formattedAddress, startObj]
+
+    startArray.push(startMeasureArr)
     console.log('startArray :', startArray)
   }
+  //const subArray = startArray.slice(1, (startArray.length + 1));
+  subArray = startArray.slice(0,(startArray.length + 1))
 
     for (let j=0; j < startArray.length; j++) {
-      //const subArray = startArray.slice(1, (startArray.length + 1));
-      subArray = startArray.slice(0,(startArray.length + 1))
       //console.log('subArray', subArray)
-      sumOfSection = sum / startArray.length;
+      sumOfSection = sum / startArray.length; //why the hell did I do this
       finalHaversineArr.push(sumOfSection);
       sum = 0;
       sumOfSection = 0;
         for (let k=0; k < subArray.length ; k++) {
 
-          haversineDistance = haversine(startArray[j], subArray[k], {unit: 'mile'})
+          haversineDistance = haversine(startArray[j][2], subArray[k][2], {unit: 'mile'})
           //console.log(haversineDistance)
           sum += haversineDistance
           
-          //finalHaversineArr.push(haversineDistance)
+     
         }
       
       //console.log('new point :', sum / startArray.length)
@@ -144,8 +154,8 @@ function findFarthestPoint(array) {
     const sortedArr = newFinalHaversineArr.sort(function(a, b){return a - b}) ///this returns the array sorted numerically in ascending order 
     const primaryMean = newFinalHaversineArr[0]
     const secondaryMean = newFinalHaversineArr[1]
-    console.log('primary :', primaryMean)
-    console.log('secondary :', secondaryMean) //we can use a loop to iterate based on # of drivers available
+    //console.log('primary :', primaryMean)
+    //console.log('secondary :', secondaryMean) //we can use a loop to iterate based on # of drivers available
 
  } //need to addd an index to the original arrray which gets passed in, then referneced when doing the math. this way, the final array can reference which points the math was for 
  
